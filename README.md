@@ -1,4 +1,4 @@
-# Project XYZ: Server-Receiver-Emisor Communication Setup
+# Project Holoconference: Server-Receiver-Emisor Communication Setup
 
 ## Overview
 This project demonstrates communication between a server, a receiver, and an emitter. Follow these steps to set up and run each component in sequence.
