@@ -1,4 +1,4 @@
-# Project Holoconference: Server-Receiver-Emisor Communication Setup
+# Project Holoconference: Server-Receiver-Sender Communication Setup
 
 ## Overview
 This project demonstrates communication between a server, a receiver, and an emitter. Follow these steps to set up and run each component in sequence.
@@ -16,6 +16,13 @@ This project demonstrates communication between a server, a receiver, and an emi
      ```
    - The server will start listening for connections.
 
+### Receiver Setup and Execution
+1. **Receiver Requirements:** Ensure you have the Godot Engine installed.
+2. **Running the Receiver:**
+   - Open the Godot Engine.
+   - Load the project that contains the receiver scene.
+   - Run the receiver scene "EscenaComunicacion.tscn" from within the Godot editor.
+  
 ### Sender Setup and Execution
 1. **Sender Requirements:** Ensure you have Python installed on your system.
 2. **Running the Sender:**
@@ -25,13 +32,6 @@ This project demonstrates communication between a server, a receiver, and an emi
      ```
      python main.py --connect
      ```
-
-### Receiver Setup and Execution
-1. **Receiver Requirements:** Ensure you have the Godot Engine installed.
-2. **Running the Receiver:**
-   - Open the Godot Engine.
-   - Load the project that contains the receiver scene.
-   - Run the receiver scene "EscenaComunicacion.tscn" from within the Godot editor.
 
 ## Notes
 - **Execution Order:** Start with the server, followed by the receiver, and then the sender.
