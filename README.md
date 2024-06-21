@@ -1,52 +1,58 @@
-Project XYZ: Server-Receiver-Emisor Communication Setup
+# Project Holoconference: Server-Receiver-Sender Communication Setup
 
-Overview:
+## Overview
 This project demonstrates communication between a server, a receiver, and an emitter. Follow these steps to set up and run each component in sequence.
 
-Instructions:
+## Instructions
 
-Server Setup and Execution:
-1. Server Requirements: Ensure you have Python installed on your system.
-2. Running the Server:
+### Server Setup and Execution
+1. **Server Requirements:** Ensure you have Python installed on your system.
+2. **Running the Server:**
    - Open a terminal.
    - Navigate to the server directory.
    - Execute the server script using Python:
      ```
-     python server.py
+     python log_server.py
      ```
    - The server will start listening for connections.
 
-
-Receiver Setup and Execution:
-1. Receiver Requirements: Ensure you have the Godot Engine installed.
-2. Running the Receiver:
+### Receiver Setup and Execution
+1. **Receiver Requirements:** Ensure you have the Godot Engine installed.
+2. **Running the Receiver:**
    - Open the Godot Engine.
    - Load the project that contains the receiver scene.
-   - Run the receiver scene from within the Godot editor.
-
-
-Emitter Setup and Execution:
-1. Emitter Requirements: Ensure you have Python installed on your system.
-2. Running the Emitter:
+   - Run the receiver scene "EscenaComunicacion.tscn" from within the Godot editor.
+  
+### Sender Setup and Execution
+1. **Sender Requirements:** Ensure you have Python installed on your system.
+2. **Running the Sender:**
    - Open a terminal.
    - Navigate to the emitter directory.
    - Execute the emitter script, specifying the connection to the server:
      ```
-     python emitter.py --connect
+     python main.py --connect
      ```
-   - Replace --connect with the appropriate connection details as needed.
 
-Notes:
-- Execution Order: Start with the server, followed by the emitter, and then the receiver.
-- Python Version: Ensure Python 3.x is installed for running the server and emitter scripts.
-- Godot Setup: Familiarize yourself with the Godot Engine to correctly load and execute the receiver scene.
+## Notes
+- **Execution Order:** Start with the server, followed by the receiver, and then the sender.
+- **Python Version:** Ensure Python 3.x is installed for running the server and emitter scripts.
+- **Godot Setup:** Familiarize yourself with the Godot Engine to correctly load and execute the receiver scene.
+- **Required Libraries:** Make sure you have the following libraries installed:
+  - Flask
+  - Mediapipe
+  - PyOgg
+  - threading
+  - cv2
+  - numpy
+  - struct
+  - time
+  - pyaudio
+  - json
+  - Concentus (in server directory)
 
-Troubleshooting:
+## Troubleshooting
 - If you encounter issues, check network configurations for server connectivity.
 - Verify Python installations and script dependencies.
 - Ensure the Godot project is correctly set up with necessary scene configurations.
 
-Contributors:
-- John Doe (@johndoe)
-- Jane Smith (@janesmith)
 
