@@ -2,6 +2,7 @@ import requests
 import socket
 import os
 import json
+import time
 
 
 username = "Emisor"
@@ -78,6 +79,11 @@ def send_session_request():
     url = "http://127.0.0.1:5000/request_session" 
     other_usernames = request_other_users()
 
+    while not other_usernames:
+        print("There are no registered users available. Waiting for someone to register...")
+        time.sleep(5)  # Esperar 5 segundos antes de volver a consultar
+        other_usernames = request_other_users()
+
 
     while True:
         for i, user in enumerate(other_usernames, 1):
@@ -89,7 +95,7 @@ def send_session_request():
             recipientIndex = int(recipientIndex) -1 
             if 0 <= recipientIndex < len(other_usernames):
                 selected_user = other_usernames[recipientIndex]
-                print("Llamando a " + selected_user)
+                print("Calling to " + selected_user)
                 break 
             else:
                 print("Invalid index. Please select a valid user number: ")
@@ -148,7 +154,7 @@ def wait_for_session_confirmation():
     message = data.decode()
     print(message)
 
-    if "denegada" in message:
+    if "denied" in message:
         # Raise an exception to signal that the session request was denied
         print("The session request has been rejected by the recipient.")
         send_session_request()

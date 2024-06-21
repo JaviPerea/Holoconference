@@ -17,23 +17,23 @@ def register_user():
     ip_address = data.get('ip_address')
 
     if username and ip_address:
-        print(f"Nueva peticion de registro recibida para el usuario '{username}' desde la direccion IP '{ip_address}'.")
+        print(f"New registration request received for user '{username}' from IP address '{ip_address}'.")
         if username in users:
             # Update the IP address of the existing user
             users[username] = {
                 'ip_address': ip_address,
                 'available': True  # User availability status
             }
-            return jsonify({'message': 'Usuario existente. Direccion IP del usuario actualizada exitosamente','session_port': 8000}), 200
+            return jsonify({'message': 'Existing user. User\'s IP address successfully updated','session_port': 8000}), 200
         else:
             # Add a new user to the list
             users[username] = {
                 'ip_address': ip_address,
                 'available': True 
             }
-            return jsonify({'message': 'Usuario registrado exitosamente', 'session_port': 8000}), 200
+            return jsonify({'message': 'Successfully registered user', 'session_port': 8000}), 200
     else:
-        return jsonify({'error': 'Faltan datos en la solicitud'}), 400
+        return jsonify({'error': 'Missing data in the application'}), 400
 
     
 
@@ -41,11 +41,13 @@ def register_user():
 @app.route('/other_users')
 def get_other_registered_users():
     """
-    Endpoint to obtain the usernames of the registered users, except the one making the request.
+    Endpoint to obtain the usernames of the registered users who are available,
+    excluding the one making the request.
     """
     requesting_user = request.args.get('requesting_user')
-    other_usernames = [username for username in users.keys() if username != requesting_user]
+    other_usernames = [username for username, info in users.items() if username != requesting_user and info['available']]
     return jsonify(other_usernames), 200
+
 
 
 
@@ -70,7 +72,7 @@ def request_session():
 
         # Process the response message
         response = {
-            'message': 'Solicitud de sesion realizada',
+            'message': 'Session request made',
             'sender': sender,
             'message_type' : 'request', 
             'audio_port': audio_port,
@@ -87,17 +89,17 @@ def request_session():
 
 
         # Information about the request is printed
-        print(f"Solicitud de sesion de {sender} a {recipient}.")
-        print(f"Puerto de datos del emisor: {data_port}")
-        print(f"Puerto de audio del emisor: {audio_port}")
+        print(f"Session request from {sender} to {recipient}.")
+        print(f"Sender image port: {data_port}")
+        print(f"Sender audio port: {audio_port}")
 
-        return jsonify({'message': 'Solicitud de sesion enviada exitosamente'}), 200
+        return jsonify({'message': 'Session request sent successfully'}), 200
         
     else:
         if (sender, recipient) in sessions:
             del sessions[(sender, recipient)]
 
-        return jsonify({'error': 'El destinatario no esta disponible'}), 400
+        return jsonify({'error': 'The recipient is not available'}), 400
 
 
     
@@ -123,23 +125,23 @@ def respond_session():
             users[sender]['available'] = False
             users[recipient]['available'] = False
 
-            message = f"Solicitud de sesion aceptada"
+            message = f"Session request accepted"
 
             sock.sendto(message.encode(), (recipient_ip, 8000))
 
-            return jsonify({'message': 'Sesion confirmada exitosamente'}), 200
+            return jsonify({'message': 'Session confirmed successfully'}), 200
         else:
-            message = f"Solicitud de sesion denegada"
+            message = f"Session request denied"
 
             sock.sendto(message.encode(), (recipient_ip, 8000))
 
             # Reject the session offer and remove it from the session dictionary
             del sessions[(recipient, sender)]
 
-            return jsonify({'message': 'Oferta de sesion rechazada exitosamente'}), 200         
+            return jsonify({'message': 'Session offer successfully rejected'}), 200         
 
     else:
-        return jsonify({'error': 'No se pudo encontrar la sesion'}), 400
+        return jsonify({'error': 'Could not find session'}), 400
 
 
 @app.route('/end_session', methods=['POST'])
@@ -163,7 +165,7 @@ def end_session():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     response = {
-            'message': 'Fin de sesion',
+            'message': 'End of session',
             'message_type' : 'end'
         }
     
@@ -173,17 +175,14 @@ def end_session():
 
 
     if (sender, recipient) in sessions:
-        # Mark users as available again
-        users[sender]['available'] = True
-        users[recipient]['available'] = True
 
         # Delete the session from the session dictionary
         del sessions[(sender, recipient)]
 
         print(f"Sesion finalizada de {sender} y {recipient}")
-        return jsonify({'message': 'Sesion finalizada exitosamente'}), 200
+        return jsonify({'message': 'Session completed successfully'}), 200
     else:
-        return jsonify({'error': 'No se encontro ninguna sesion asociada a los usuarios proporcionados'}), 400
+        return jsonify({'error': 'No session was found associated with the provided users'}), 400
     
 
 
