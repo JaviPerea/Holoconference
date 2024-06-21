@@ -34,7 +34,7 @@ This project demonstrates communication between a server, a receiver, and an emi
      ```
 
 ## Notes
-- **Execution Order:** Start with the server, followed by the receiver, and then the sender.
+- **Execution Order:** The server must be run first. Afterwards, the order of execution of sender and receiver does not matter.
 - **Python Version:** Ensure Python 3.x is installed for running the server and emitter scripts.
 - **Godot Setup:** Familiarize yourself with the Godot Engine to correctly load and execute the receiver scene.
 - **Required Libraries:** Make sure you have the following libraries installed:
